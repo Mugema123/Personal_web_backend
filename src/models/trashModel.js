@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import moment from 'moment';
 import googleUserModel from './auth/googleUserModel.js';
 import userModel from './auth/userModel.js';
-import Application from './Application.js';
 
 const Schema = mongoose.Schema;
 
@@ -63,13 +62,6 @@ changeStream.on('change', async change => {
           await googleUserModel.findByIdAndDelete(elementId);
         } catch (error) {
           console.log('DELETE GOOGLE USER FAILED!', email);
-        }
-        break;
-      case 'Application':
-        try {
-          await Application.findByIdAndDelete(elementId);
-        } catch (error) {
-          console.log('DELETE APPLICATION FAILED!', elementId);
         }
         break;
 

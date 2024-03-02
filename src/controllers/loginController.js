@@ -13,10 +13,8 @@ import {
 } from '../helpers/security.helper.js';
 import mailUsersValidationSchema from '../validations/mailUserValidation.js';
 import emailUsersTemp from '../helpers/emailTemplates/emailToUsers.js';
-import Application from '../models/Application.js';
 import { HttpException } from '../exceptions/HttpException.js';
 import moment from 'moment';
-import staffModel from '../models/staffModel.js';
 import { sendEmail } from '../helpers/nodemailer.js';
 import userModel from '../models/auth/userModel.js';
 
@@ -585,35 +583,35 @@ async function filterReceivers(receiversType) {
         }
       });
       return filteredAdmins;
-    case 'members':
-      const membersData = await Application.find({
-        status: 'APPROVED',
-      }).select(
-        'information.name information.firstName information.lastName information.email',
-      );
-      const members = membersData.map(m => ({
-        email: m.information.email,
-        name: m.information.name
-          ? m.information.name
-          : `${m.information.firstName} ${m.information.lastName}`,
-      }));
-      const uniqueMembers = new Set();
+    // case 'members':
+    //   const membersData = await Application.find({
+    //     status: 'APPROVED',
+    //   }).select(
+    //     'information.name information.firstName information.lastName information.email',
+    //   );
+    //   const members = membersData.map(m => ({
+    //     email: m.information.email,
+    //     name: m.information.name
+    //       ? m.information.name
+    //       : `${m.information.firstName} ${m.information.lastName}`,
+    //   }));
+    //   const uniqueMembers = new Set();
 
-      const filteredMembers = members.filter(user => {
-        if (uniqueMembers.has(user.email)) {
-          return false;
-        } else {
-          uniqueMembers.add(user.email);
-          return true;
-        }
-      });
-      return filteredMembers;
-    case 'staff':
-      const staffs = await staffModel
-        .find()
-        .select('name email')
-        .sort({ createdAt: -1 });
-      return staffs;
+    //   const filteredMembers = members.filter(user => {
+    //     if (uniqueMembers.has(user.email)) {
+    //       return false;
+    //     } else {
+    //       uniqueMembers.add(user.email);
+    //       return true;
+    //     }
+    //   });
+    //   return filteredMembers;
+    // case 'staff':
+    //   const staffs = await staffModel
+    //     .find()
+    //     .select('name email')
+    //     .sort({ createdAt: -1 });
+    //   return staffs;
     default:
       return [];
   }

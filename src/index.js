@@ -16,10 +16,7 @@ const ourMemoryStore = MemoryStore(expressSession);
 const app = express();
 const corsOptions = {
   origin: [
-    'https://rupi.rw',
-    'https://dashboard.rupi.rw',
     'http://localhost:3000',
-    'http://192.168.1.101:3000',
   ],
   credentials: true,
   optionsSuccessStatus: 200,
@@ -53,21 +50,16 @@ app.use(routes);
 
 export default app;
 
-//Server and database connection
 const port = process.env.PORT || 5000;
 
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true });
 
-//Listening on port server
 app.listen(port, () => {
-  //Logging connection success message
   console.log(
     `Server is running on port ${port} (http://localhost:${port}/) 🔥`,
   );
-  //Connecting to Database
   mongoose.connection.once('open', () => {
-    //Logging connection success message
     console.log('Database connected successfully 🌏');
   });
 });
