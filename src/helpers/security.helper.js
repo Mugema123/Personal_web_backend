@@ -13,10 +13,11 @@ export const generateAccessToken = (user, res) => {
   );
   //Generating cookie
   res.cookie('accessTokenCookie', token, {
+    domain: 'localhost',
     path: '/',
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: false,
+    sameSite: 'strict',
   });
   return token;
 };

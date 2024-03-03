@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
-import slugify from 'slugify';
 import projectsModel from '../models/projectsModel.js';
 import projectsValidationSchema from '../validations/projectsValidation.js';
-import cloudinary from '../helpers/cloudinary.js';
 import { uploadMultiple, uploadSingle } from '../helpers/upload.js';
 
 // Create a Project
@@ -20,47 +18,25 @@ const createProject = async (request, response) => {
       request.body.projectImage,
     );
 
-    const otherProjectImagesResult = await uploadMultiple(
-      request.body.otherProjectImages,
-    );
-
     const newProject = new projectsModel({
       title: request.body.title,
-      description: request.body.description,
-      activitiesPerformed: request.body.activitiesPerformed,
-      result: request.body.result,
-      employer: request.body.employer,
-      year: request.body.year,
-      location: request.body.location,
-      client: request.body.client,
-      category: request.body.category,
+      githubLink: request.body.githubLink,
+      demoLink: request.body.demoLink,
       projectImage: projectImageResult.secure_url,
-      otherProjectImages: otherProjectImagesResult.images,
-      slug: slugify(request.body.title, {
-        lower: true,
-        strict: true,
-      }),
     });
 
     const Project = await newProject.save();
 
     response.status(200).json({
       successMessage: 'Project created successfully!',
-      otherMessage: otherProjectImagesResult.errors,
       projectContent: Project,
     });
   } catch (error) {
-    if (error.code === 11000 || error.code === 11001) {
-      response.status(400).json({
-        duplicationError:
-          'You already have a project with this title!',
-      });
-    } else {
+    console.log(error.message);
       response.status(500).json({
         status: 'fail',
         message: error.message,
       });
-    }
   }
 };
 
@@ -68,21 +44,6 @@ const createProject = async (request, response) => {
 const getAllProjects = async (request, response) => {
   try {
     let query = [];
-
-    // Only show needed fields
-    if (!request.query.allFields) {
-      query.push({
-        $project: {
-          _id: 1,
-          title: 1,
-          slug: 1,
-          projectImage: 1,
-          category: 1,
-          location: 1,
-          createdAt: 1,
-        },
-      });
-    }
 
     // Sort functionality
     if (request.query.sortBy && request.query.sortOrder) {
@@ -138,7 +99,6 @@ const getAllProjects = async (request, response) => {
         .json({ ProjectError: 'Projects not found' });
     }
   } catch (error) {
-    // console.log(error);;
     response.status(500).json({
       status: 'fail',
       message: error.message,
@@ -164,33 +124,6 @@ const getSingleProject = async (request, response) => {
       });
     }
   } catch (error) {
-    // console.log(error);;
-    response.status(500).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
-
-// Getting Project by category
-const getProjectByCategory = async (request, response) => {
-  try {
-    const Project = await projectsModel.find({
-      category: request.query.category,
-    });
-
-    if (Project) {
-      response.status(200).json({
-        successMessage: 'Project fetched successfully!',
-        fetchedProject: Project,
-      });
-    } else {
-      response.status(400).json({
-        ProjectFetchedError: 'Project not found!',
-      });
-    }
-  } catch (error) {
-    // console.log(error);;
     response.status(500).json({
       status: 'fail',
       message: error.message,
@@ -202,26 +135,17 @@ const getProjectByCategory = async (request, response) => {
 
 const updateProject = async (request, response) => {
   try {
-    let slug = request.query.slug;
+    let id = request.query.id;
 
-    const Project = await projectsModel.findOne({ slug: slug });
+    const Project = await projectsModel.findOne({ _id: id });
 
     if (Project) {
       (Project.title = request.body.title || Project.title),
-        (Project.description =
-          request.body.description || Project.description),
-        (Project.activitiesPerformed =
-          request.body.activitiesPerformed ||
-          Project.activitiesPerformed),
-        (Project.result = request.body.result || Project.result),
-        (Project.client = request.body.client || Project.client),
-        (Project.employer =
-          request.body.employer || Project.employer),
-        (Project.year = request.body.year || Project.year),
-        (Project.location =
-          request.body.location || Project.location),
-        (Project.category =
-          request.body.category || Project.category);
+        (Project.githubLink =
+          request.body.githubLink || Project.githubLink),
+        (Project.demoLink =
+          request.body.demoLink ||
+          Project.demoLink);
 
       if (request.body.projectImage) {
         const projectImageResult = await uploadSingle(
@@ -232,20 +156,6 @@ const updateProject = async (request, response) => {
           projectImageResult.secure_url || Project.projectImage;
       } else {
         Project.projectImage = Project.projectImage;
-      }
-      if (
-        request.body.otherProjectImages &&
-        request.body.otherProjectImages?.length > 0
-      ) {
-        const otherProjectImagesResult = await uploadMultiple(
-          request.body.otherProjectImages,
-        );
-
-        Project.otherProjectImages =
-          otherProjectImagesResult.images ||
-          Project.otherProjectImages;
-      } else {
-        Project.otherProjectImages = Project.otherProjectImages;
       }
 
       await Project.save();
@@ -260,7 +170,6 @@ const updateProject = async (request, response) => {
       });
     }
   } catch (error) {
-    // console.log(error);;
     response.status(500).json({
       status: 'fail',
       message: error.message,
@@ -294,7 +203,6 @@ const deleteProject = async (request, response) => {
       });
     }
   } catch (error) {
-    // console.log(error);;
     response.status(500).json({
       status: 'fail',
       message: error.message,
@@ -306,7 +214,6 @@ export default {
   createProject,
   getAllProjects,
   getSingleProject,
-  getProjectByCategory,
   updateProject,
   deleteProject,
 };

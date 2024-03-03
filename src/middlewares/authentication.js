@@ -3,7 +3,7 @@ import { verifyAccessToken } from '../helpers/security.helper.js';
 
 const authLogin = async (request, response, next) => {
   const token = request.cookies.accessTokenCookie;
-
+  console.log(request.cookies);
   if (!token) {
     return response.status(401).json({
       invalidToken: 'Please Login to continue!',

@@ -13,46 +13,15 @@ const projectsSchema = new Schema(
       type: String,
       required: true,
     },
-    otherProjectImages: { type: [String], required: true },
-    description: {
+
+    githubLink: {
       type: String,
       required: true,
     },
 
-    activitiesPerformed: {
+    demoLink: {
       type: String,
       required: true,
-    },
-
-    result: {
-      type: String,
-      required: true,
-    },
-
-    employer: {
-      type: String,
-      required: true,
-    },
-
-    year: {
-      type: String,
-      required: true,
-    },
-
-    location: {
-      type: String,
-      required: true,
-    },
-
-    category: {
-      type: String,
-      required: true,
-    },
-
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
     },
   },
   {

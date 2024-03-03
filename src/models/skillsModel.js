@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const testimonialSchema = new Schema(
+const skillsSchema = new Schema(
   {
     name: {
       type: String,
@@ -13,11 +13,6 @@ const testimonialSchema = new Schema(
       type: String,
       required: true,
     },
-
-    testimonial: {
-      type: String,
-      required: true,
-    },
     isPublic: { type: Boolean, required: true },
   },
   {
@@ -25,4 +20,4 @@ const testimonialSchema = new Schema(
   },
 );
 
-export default mongoose.model('Testimonial', testimonialSchema);
+export default mongoose.model('Skills', skillsSchema);
