@@ -59,7 +59,7 @@ const createNewUser = async (request, response) => {
     const sender = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'rupiwebsite23@gmail.com',
+        user: 'ndicunguyesteve4@gmail.com',
         pass: process.env.NODEMAILER_PASSWORD,
       },
       tls: {
@@ -68,9 +68,9 @@ const createNewUser = async (request, response) => {
     });
 
     const mailOptions = {
-      from: '"RUPI" <rupiwebsite23@gmail.com>',
+      from: '"MUGEMA" <ndicunguyesteve4@gmail.com>',
       to: newUser.email,
-      subject: 'RUPI | Verify your email',
+      subject: 'MUGEMA | Verify your email',
       html: `
             <div style="padding: 10px 0;">
                 <h3> ${newUser.firstName} ${newUser.lastName} thank you for registering on our platform! </h3> 
@@ -203,7 +203,7 @@ const assignUserRole = async (request, response) => {
       subject: 'Your Role Has Updated!',
       html: emailUsersTemp({
         name: updated.name,
-        body: `We would like to let you know that your role at RUPI was updated from ${user.role
+        body: `We would like to let you know that your role at MUGEMA was updated from ${user.role
           .split('_')
           .join(' ')} to ${updated.role.split('_').join(' ')}.`,
       }),

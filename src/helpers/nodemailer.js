@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 const sender = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'rupiwebsite23@gmail.com',
+    user: 'ndicunguyesteve4@gmail.com',
     pass: process.env.NODEMAILER_PASSWORD,
   },
   tls: {
@@ -13,7 +13,7 @@ const sender = nodemailer.createTransport({
 
 function sendEmail({ to, subject, html }) {
   const mailOptions = {
-    from: '"RUPI Urban Planners" <rupiwebsite23@gmail.com>',
+    from: '"MUGEMA" <ndicunguyesteve4@gmail.com>',
     to,
     subject,
     html,

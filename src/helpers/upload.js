@@ -1,6 +1,6 @@
 import cloudinary from "./cloudinary.js";
 
-const folder = "RUPI Project Images";
+const folder = "MUGEMA Project Images";
 
 export const uploadSingle = async (image) => {
   try {

@@ -224,13 +224,6 @@ const forgotPassword = async (request, response) => {
       process.env.FORGOTPASSWORD_RESET_SECRET,
     );
 
-    response.cookie('forgotPasswordTokenCookie', resetPasswordToken, {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-    });
-
     await getUser.updateOne({
       resetToken: resetPasswordToken,
     });
@@ -238,7 +231,7 @@ const forgotPassword = async (request, response) => {
     const sender = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'rupiwebsite23@gmail.com',
+        user: 'ndicunguyesteve4@gmail.com',
         pass: process.env.NODEMAILER_PASSWORD,
       },
       tls: {
@@ -247,9 +240,9 @@ const forgotPassword = async (request, response) => {
     });
 
     const mailOptions = {
-      from: '"RUPI" <rupiwebsite23@gmail.com>',
+      from: '"MUGEMA" <ndicunguyesteve4@gmail.com>',
       to: getUser.email,
-      subject: 'RUPI | Reset your password',
+      subject: 'MUGEMA | Reset your password',
       html: `
             <div style="padding: 10px 0;">
                 <h3> Hello ${getUser.firstName}, we received a request from someone ( hopefully you ) to reset your password! </h3> 
@@ -324,8 +317,8 @@ const newPassword = async (request, response) => {
         .status(400)
         .json({ validationError: error.details[0].message });
 
-    const token = request.cookies.forgotPasswordTokenCookie;
-
+    const token = request.headers["forgotpasswordtoken"];
+      console.log(request.headers);
     if (!token)
       return response.status(401).json({
         tokenError:
@@ -395,7 +388,7 @@ const updateUser = async (request, response) => {
         const result = await cloudinary.uploader.upload(
           request.body.picture,
           {
-            folder: 'RUPI Project Images',
+            folder: 'MUGEMA Project Images',
           },
         );
 

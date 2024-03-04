@@ -85,9 +85,9 @@ const userSchema = new Schema(
       default: {
         title: '',
         description: '',
-        facebook: 'https://www.facebook.com/rupi',
-        twitter: 'https://twitter.com/rupi',
-        linkedin: 'https://www.linkedin.com/in/rupi',
+        facebook: 'https://www.facebook.com/MUGEMA',
+        twitter: 'https://twitter.com/MUGEMA',
+        linkedin: 'https://www.linkedin.com/in/MUGEMA',
       },
     },
 

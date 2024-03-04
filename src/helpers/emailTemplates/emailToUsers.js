@@ -11,7 +11,7 @@ export default function emailUsersTemp({ body, name }) {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="x-apple-disable-message-reformatting">
                 
-                <title>RUPI</title>
+                <title>MUGEMA</title>
                 
                 <!--[if gte mso 9]>
                 <xml>
@@ -39,8 +39,6 @@ export default function emailUsersTemp({ body, name }) {
                 <tr>
                 <td align="left" valign="top" style="font-family: 'Arial', sans-serif; padding:20px;">
                 <![endif]--> 
-                    
-                    <a href='https://rupi.rw'><img src='https://i.imgur.com/PpUPgOU.jpg' type='image' style="height:100px;width:120px;"></a>
                 
                 <h1 style="font-size:16px; line-height:22px; font-weight:normal; color:#333333;">
                     Hello ${name},
@@ -56,9 +54,9 @@ export default function emailUsersTemp({ body, name }) {
                 
                 <p style="font-size:12px; line-height:18px; color:#999999; margin-bottom:10px; text-align: center;">
                     &copy; Copyright
-                    <a href="https://rupi.rw" 
+                    <a href="https://MUGEMA.rw" 
                     style="font-size:12px; line-height:18px; color:#3aaf47; text-decoration: none; font-weight:bold;">
-                    RUPI ${new Date().getFullYear()}</a>, All Rights Reserved.
+                    MUGEMA ${new Date().getFullYear()}</a>, All Rights Reserved.
                 </p>
                 
                 <!--[if mso | IE]>
