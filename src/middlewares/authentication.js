@@ -2,8 +2,7 @@ import Jwt from 'jsonwebtoken';
 import { verifyAccessToken } from '../helpers/security.helper.js';
 
 const authLogin = async (request, response, next) => {
-  const token = request.cookies.accessTokenCookie;
-  console.log(request.cookies);
+  const token = request.headers["authorization"];
   if (!token) {
     return response.status(401).json({
       invalidToken: 'Please Login to continue!',
@@ -38,7 +37,7 @@ const isSuperAdmin = (req, res, next) =>
 
 const checkRole = async (request, response, next, role) => {
   try {
-    const token = request.cookies.accessTokenCookie;
+    const token = request.headers["authorization"];
     if (!token) {
       return response.status(401).json({
         invalidToken: 'Please Login to continue!',
