@@ -7,6 +7,7 @@ import servicesRoute from './servicesRoute.js';
 import skillsRoute from './skillsRoute.js';
 import googleRoute from './googleRoute.js';
 import contactRoute from "./contactRoute.js";
+import aboutRoute from "./aboutRoute.js";
    
 const routes = Router();
 
@@ -22,6 +23,7 @@ routes.use('/projects', projectsRoute);
 routes.use('/services', servicesRoute);
 routes.use('/skills', skillsRoute);
 routes.use("/messages", contactRoute);
+routes.use("/about", aboutRoute);
 
 export default routes;
  
