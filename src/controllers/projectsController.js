@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import projectsModel from '../models/projectsModel.js';
 import projectsValidationSchema from '../validations/projectsValidation.js';
-import { uploadMultiple, uploadSingle } from '../helpers/upload.js';
+import { uploadSingle } from '../helpers/upload.js';
 
 // Create a Project
 const createProject = async (request, response) => {
@@ -20,6 +20,7 @@ const createProject = async (request, response) => {
 
     const newProject = new projectsModel({
       title: request.body.title,
+      description: request.body.description,
       githubLink: request.body.githubLink,
       demoLink: request.body.demoLink,
       projectImage: projectImageResult.secure_url,
@@ -141,6 +142,7 @@ const updateProject = async (request, response) => {
 
     if (Project) {
       (Project.title = request.body.title || Project.title),
+      (Project.description = request.body.description || Project.description),
         (Project.githubLink =
           request.body.githubLink || Project.githubLink),
         (Project.demoLink =
